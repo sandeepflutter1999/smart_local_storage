@@ -1,0 +1,27 @@
+name: smart_local_storage
+description: Pure Dart/Flutter local storage — no third-party packages. Save lists of records (with auto or custom ids) to disk as plain Maps, no model classes or code generation needed.
+version: 0.0.2
+homepage: https://github.com/sandeepflutter1999/smart_local_storage
+repository: https://github.com/sandeepflutter1999/smart_local_storage
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.smartlocalstorage.smart_local_storage
+        pluginClass: SmartLocalStoragePlugin
+      ios:
+        pluginClass: SmartLocalStoragePlugin
