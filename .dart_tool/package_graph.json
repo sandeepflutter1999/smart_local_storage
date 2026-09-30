@@ -1,10 +1,10 @@
 {
   "roots": [
-    "smart_local_storage"
+    "smart_local_cache"
   ],
   "packages": [
     {
-      "name": "smart_local_storage",
+      "name": "smart_local_cache",
       "version": "2.0.1",
       "dependencies": [
         "flutter"

@@ -158,7 +158,7 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "smart_local_storage",
+      "name": "smart_local_cache",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.0"
