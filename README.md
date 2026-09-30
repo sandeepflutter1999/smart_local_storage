@@ -80,3 +80,4 @@ final all = notesBox.getAll();   // List<Note>
 
 
 # smart_local_storage
+# smart_local_storage
