@@ -1,6 +1,4 @@
-/// Pure Dart/Flutter local storage — no third-party pub packages.
-library smart_local_storage;
+/// Compatibility entry point - same as `smart_local_cache.dart`.
+library;
 
-export 'src/smart_local_storage_base.dart';
-export 'src/smart_box.dart' show SmartBox;
-export 'src/smart_model_box.dart' show SmartModelBox;
+export 'smart_local_cache.dart';

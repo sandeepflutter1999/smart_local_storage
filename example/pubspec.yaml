@@ -1,5 +1,5 @@
 name: smart_local_storage_example
-description: Example app for smart_local_storage
+description: Example app for smart_local_cache
 version: 1.0.0
 publish_to: 'none'
 
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  smart_local_storage:
+  smart_local_cache:
     path: ../
 
 dev_dependencies:

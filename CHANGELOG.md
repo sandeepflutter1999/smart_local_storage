@@ -1,3 +1,28 @@
+## 2.1.0
+
+### Added
+- In-memory cache with debounced, batched disk writes (`writeDelay`).
+- Atomic saves (temp file + rename) with `.bak` backup; corrupt files are kept as `.corrupt` and the box recovers from the backup.
+- Background isolate for encoding/decoding big boxes (`isolateThreshold`).
+- Reactive streams: `watchAll()`, `watch(id)`, `events` (also on `SmartModelBox`).
+- `query(where, sort, offset, limit)`, `firstWhere`, `count`, `getMany`, `ids`.
+- Batch ops: `addAll`, `putAll`, `deleteAll`, `deleteWhere`.
+- Schema versioning with `version` + `onMigrate`.
+- `flush()`, `flushAll()`, `close()`, `closeAll()`; automatic flush when the app leaves the foreground.
+- `flush: true` option on every write method.
+- New entry file `package:smart_local_cache/smart_local_cache.dart` (the old `smart_local_storage.dart` still works).
+
+### Fixed
+- Two simultaneous `SmartLocalStorage.box(name)` calls no longer open two instances of the same file.
+- Auto-id counter is saved, so ids are not reused after deleting the newest record and restarting.
+- Stored data is copied and validated: later changes to your map no longer leak into the box, and unsupported types (e.g. `DateTime`) throw immediately.
+- Box names are validated (letters, digits, `_`, `-`).
+
+### Behavior changes
+- `add/put/update/delete` return once memory is updated; the disk write follows ~300 ms later (use `flush: true` or `writeDelay: Duration.zero` for the old write-through behavior).
+- `'id'` is reserved: the box id always wins over an `'id'` key inside your data.
+- Files written by older versions are read as before and upgraded on the next save.
+
 ## 2.0.1
 
 ### Fixed
