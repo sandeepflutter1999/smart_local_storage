@@ -95,9 +95,11 @@ class SmartLazyBox {
 
   /// Rebuilds the in-memory index by reading the log once, line by line.
   /// Line formats (UTF-8, tab separated):
-  ///   P <id> <payload>   put (payload is JSON, or base64 when encrypted)
-  ///   D <id>             delete
-  ///   N <number>         next auto id (written by compaction)
+  /// ```text
+  /// P  id  payload   put (payload is JSON, or base64 when encrypted)
+  /// D  id            delete
+  /// N  number        next auto id (written by compaction)
+  /// ```
   Future<void> _scan() async {
     _index.clear();
     _length = 0;
@@ -704,7 +706,7 @@ class _Loc {
   final int lineBytes; // whole line incl. header and newline
 }
 
-/// Orders mixed values: numbers < strings < booleans, then by value.
+/// Orders mixed values: numbers first, then strings, then booleans.
 int _compareValues(Object a, Object b) {
   int rank(Object v) => v is num ? 0 : (v is String ? 1 : 2);
   final ra = rank(a);

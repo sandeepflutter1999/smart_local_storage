@@ -136,7 +136,7 @@ void main() {
     await b.close();
 
     final c = await SmartBox.open('migrate', version: 2,
-        onMigrate: (_, __, ___) => fail('must not run again'));
+        onMigrate: (from, to, records) => fail('must not run again'));
     expect(c.get('0')!['currency'], 'INR');
     await c.close();
   });

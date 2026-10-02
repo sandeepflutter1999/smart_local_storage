@@ -9,7 +9,7 @@ Pure Dart/Flutter local storage plugin with no third-party pub packages.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'sandeepflutter1999' => 'sandeepflutter1999@example.com' }
   s.source           = { :path => '.' }
-  s.source_files     = 'Classes/**/*'
+  s.source_files     = 'smart_local_storage/Sources/smart_local_storage/**/*.swift'
   s.dependency 'Flutter'
   s.platform         = :ios, '13.0'
   s.swift_version    = '5.0'

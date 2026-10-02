@@ -1,3 +1,16 @@
+## 2.2.1
+
+### Fixed
+- `pubspec.yaml` description shortened (pub.dev limit is 180 characters).
+- Static analysis: removed an unnecessary import and fixed doc comments that looked like HTML.
+
+### Added
+- macOS, Linux and Windows support for plain storage (no native code needed; the folder is found in Dart). Encryption stays Android / iOS only and throws `UnsupportedError` elsewhere.
+- Swift Package Manager support for iOS (`ios/smart_local_storage/Package.swift`).
+
+### Removed
+- Unused `lib/generated/assets.dart`.
+
 ## 2.2.0
 
 ### Added

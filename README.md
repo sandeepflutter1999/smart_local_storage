@@ -12,6 +12,8 @@ plain `Map`s out. No model classes, no `build_runner`.
 - `lazyBox` for big data (records stay on disk) with indexes (`findBy`, `findRange`)
 - Optional AES-256-GCM encryption with the key in Android Keystore / iOS Keychain
 
+**Platforms:** Android, iOS, macOS, Linux, Windows. Encryption: Android and iOS only. Web is not supported (it needs `dart:io`).
+
 ## 1. Open a box (no init needed)
 
 ```dart

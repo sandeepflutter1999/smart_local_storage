@@ -1,6 +1,6 @@
 name: smart_local_cache
-description: Local storage for Flutter with no third-party packages. Plain Map records, live streams, queries and indexes, optional AES-256 encryption (Keystore/Keychain) and a disk-backed box for big data.
-version: 2.2.0
+description: "Local storage for Flutter with no third-party packages: Map records, live streams, queries, indexes, AES-256 encryption and a disk-backed box for big data."
+version: 2.2.1
 homepage: https://github.com/sandeepflutter1999/smart_local_storage
 repository: https://github.com/sandeepflutter1999/smart_local_storage
 issue_tracker: https://github.com/sandeepflutter1999/smart_local_storage/issues
@@ -26,3 +26,9 @@ flutter:
         pluginClass: SmartLocalStoragePlugin
       ios:
         pluginClass: SmartLocalStoragePlugin
+      macos:
+        dartPluginClass: SmartLocalStorageDesktop
+      linux:
+        dartPluginClass: SmartLocalStorageDesktop
+      windows:
+        dartPluginClass: SmartLocalStorageDesktop
