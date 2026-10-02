@@ -1,3 +1,17 @@
+## 2.2.0
+
+### Added
+- `SmartLocalStorage.lazyBox(...)` / `SmartLazyBox`: disk-backed box for big data. Only ids stay in memory, records are read from disk on demand (append-only log with automatic compaction, crash-safe). Reads are async.
+- Secondary indexes for lazy boxes: `indexes: [...]`, `findBy`, `findRange`.
+- `encrypted: true` on `box(...)` and `lazyBox(...)`: AES-256-GCM, key stored in Android Keystore / iOS Keychain (native code, no pub.dev package).
+- Unit tests, `analysis_options.yaml` and a GitHub Actions workflow (analyze + test on stable and beta, weekly).
+- Example app: new "Big data" screen.
+
+### Changed
+- Android: encryption needs API 23+ (plain storage still works from API 21).
+- iOS: minimum raised to 13.0 (CryptoKit).
+- Box files are written as bytes (same content as before for plain boxes).
+
 ## 2.1.0
 
 ### Added

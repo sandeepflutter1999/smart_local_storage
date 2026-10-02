@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show debugPrint;
 
+import 'smart_crypto.dart';
 import 'smart_paths.dart';
 
 /// Called once when a box is opened with a higher `version` than the one
@@ -48,15 +50,19 @@ class SmartBox {
     required this.version,
     required Duration writeDelay,
     required int isolateThreshold,
+    required bool encrypted,
     required void Function(Object error, StackTrace stackTrace)? onError,
   })  : _tmp = File('${_file.path}.tmp'),
         _bak = File('${_file.path}.bak'),
         _writeDelay = writeDelay,
         _isolateThreshold = isolateThreshold,
+        _encrypted = encrypted,
         _onError = onError;
 
   static const int _formatVersion = 2;
   static const String _magic = '__smart_box__';
+  // 'SLC1' - first bytes of an encrypted box file.
+  static const List<int> _encMagic = [0x53, 0x4C, 0x43, 0x31];
   static final RegExp _validName = RegExp(r'^[A-Za-z0-9_\-]+$');
 
   final String name;
@@ -69,6 +75,7 @@ class SmartBox {
   final File _bak;
   final Duration _writeDelay;
   final int _isolateThreshold;
+  final bool _encrypted;
   final void Function(Object error, StackTrace stackTrace)? _onError;
 
   /// id -> record. Records are never mutated after they are stored (an
@@ -94,6 +101,7 @@ class SmartBox {
     SmartMigration? onMigrate,
     Duration writeDelay = const Duration(milliseconds: 300),
     int isolateThreshold = 500,
+    bool encrypted = false,
     void Function(Object error, StackTrace stackTrace)? onError,
   }) async {
     if (!_validName.hasMatch(name)) {
@@ -114,6 +122,7 @@ class SmartBox {
       version: version,
       writeDelay: writeDelay,
       isolateThreshold: isolateThreshold,
+      encrypted: encrypted,
       onError: onError,
     );
     await box._load();
@@ -148,15 +157,28 @@ class SmartBox {
 
   Future<Map<String, dynamic>?> _tryRead(File file) async {
     if (!await file.exists()) return null;
-    final content = await file.readAsString();
-    if (content.trim().isEmpty) return null;
-    final Object? decoded = content.length >= 100000
-        ? await _decodeInIsolate(content)
-        : jsonDecode(content);
+    var bytes = await file.readAsBytes();
+    if (bytes.isEmpty) return null;
+    // Encrypted files start with a marker. We always decrypt them when we
+    // see it, so turning `encrypted` off later still reads old data.
+    if (_hasMagic(bytes)) {
+      bytes = await SmartCrypto.decrypt(Uint8List.sublistView(bytes, _encMagic.length));
+    }
+    final Object? decoded = bytes.length >= 100000
+        ? await _decodeInIsolate(bytes)
+        : jsonDecode(utf8.decode(bytes));
     if (decoded is! Map) {
       throw FormatException('Box "$name" file is not a JSON object.');
     }
     return Map<String, dynamic>.from(decoded);
+  }
+
+  static bool _hasMagic(Uint8List bytes) {
+    if (bytes.length < _encMagic.length) return false;
+    for (var i = 0; i < _encMagic.length; i++) {
+      if (bytes[i] != _encMagic[i]) return false;
+    }
+    return true;
   }
 
   void _ingest(Map<String, dynamic> map) {
@@ -500,12 +522,18 @@ class SmartBox {
       // Shallow copy is enough: stored records are never mutated.
       'data': Map<String, Map<String, dynamic>>.of(_data),
     };
-    final json = _data.length >= _isolateThreshold
+    Uint8List bytes = _data.length >= _isolateThreshold
         ? await _encodeInIsolate(payload)
-        : jsonEncode(payload);
+        : Uint8List.fromList(utf8.encode(jsonEncode(payload)));
+    if (_encrypted) {
+      final cipher = await SmartCrypto.encrypt(bytes);
+      bytes = Uint8List(_encMagic.length + cipher.length)
+        ..setRange(0, _encMagic.length, _encMagic)
+        ..setRange(_encMagic.length, _encMagic.length + cipher.length, cipher);
+    }
 
     // Atomic write: temp file first, then rename over the real file.
-    await _tmp.writeAsString(json, flush: true);
+    await _tmp.writeAsBytes(bytes, flush: true);
     if (await _file.exists()) {
       await _file.rename(_bak.path); // keep last good copy
     }
@@ -570,8 +598,8 @@ class SmartBox {
 
 // Top-level so the isolate closure never captures a SmartBox (which holds
 // files and streams that cannot be sent between isolates).
-Future<String> _encodeInIsolate(Map<String, dynamic> payload) =>
-    Isolate.run(() => jsonEncode(payload));
+Future<Uint8List> _encodeInIsolate(Map<String, dynamic> payload) =>
+    Isolate.run(() => Uint8List.fromList(utf8.encode(jsonEncode(payload))));
 
-Future<Object?> _decodeInIsolate(String content) =>
-    Isolate.run(() => jsonDecode(content));
+Future<Object?> _decodeInIsolate(Uint8List bytes) =>
+    Isolate.run(() => jsonDecode(utf8.decode(bytes)));

@@ -1,0 +1,10 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - lib/generated/**
+
+linter:
+  rules:
+    - prefer_final_locals
+    - avoid_print

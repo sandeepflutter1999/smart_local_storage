@@ -5,9 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05d08785-668f-4261-8277-913b642a3255" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_graph.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/version" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/analysis_options.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/.dart_tool/package_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/.dart_tool/package_graph.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/pages/big_data_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/smart_crypto.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/smart_lazy_box.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/smart_box_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/smart_lazy_box_test.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test_setup.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_graph.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_graph.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/smartlocalstorage/smart_local_storage/SmartLocalStoragePlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/smartlocalstorage/smart_local_storage/SmartLocalStoragePlugin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/SmartLocalStoragePlugin.swift" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/SmartLocalStoragePlugin.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/smart_local_storage.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/smart_local_storage.podspec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/smart_local_cache.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/smart_local_cache.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/smart_box.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/smart_box.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/smart_local_storage_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/smart_local_storage_base.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,21 +45,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "sandeepflutter1999"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;sandeepflutter1999&quot;
   }
-}]]></component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="f1298e23-6f19-4827-9c29-bc50bd068a15" />
-  </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:sandeepflutter1999/smart_local_storage.git",
-    "accountId": "f1298e23-6f19-4827-9c29-bc50bd068a15"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sandeepflutter1999/smart_local_storage.git&quot;,
+    &quot;accountId&quot;: &quot;c2a24139-4529-4fbc-916d-c6cfa6f417bc&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -49,11 +71,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Rebasing main",
     "io.flutter.project.isFirstOpen": "true",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Project",
@@ -63,11 +86,6 @@
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-    </key>
-  </component>
   <component name="RunManager">
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />

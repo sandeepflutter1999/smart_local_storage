@@ -9,6 +9,8 @@ plain `Map`s out. No model classes, no `build_runner`.
 - Big boxes are saved/loaded on a background isolate - no UI jank
 - Live updates with `Stream` (`watchAll`, `watch`) - works with `StreamBuilder`
 - Filter / sort / page with `query()`, batch ops, schema migrations
+- `lazyBox` for big data (records stay on disk) with indexes (`findBy`, `findRange`)
+- Optional AES-256-GCM encryption with the key in Android Keystore / iOS Keychain
 
 ## 1. Open a box (no init needed)
 
@@ -129,13 +131,75 @@ SmartLocalStorage.box('x',
 );
 ```
 
+## 9. Big data: lazyBox (records stay on disk)
+
+A normal box keeps everything in memory. For 50k+ records use a lazy box:
+only ids are in memory, each record is read from disk when you ask for it.
+
+```dart
+final people = await SmartLocalStorage.lazyBox(
+  'people',
+  indexes: ['city', 'age'],   // fields you want to search fast
+);
+
+await people.addAll([...]);                       // fast appends
+final one = await people.get(id);                 // reads are async
+final page = await people.query(where: (r) => r['age'] > 30, limit: 20);
+
+// Indexed search - no scan of the whole box
+final delhi = await people.findBy('city', 'Delhi');
+final twenties = await people.findRange('age', min: 20, max: 29);
+
+// Memory stays flat even for a huge box
+await for (final person in people.stream()) { ... }
+```
+
+Same write API as a normal box (`add`, `put`, `update`, `delete`, `addAll`,
+`deleteWhere`, ...), plus `watch(id)` and `watchAll(limit: ...)`.
+Only equality / range on one field per call - there are no joins. Store ids
+of other records and use `getMany(ids)` for relations.
+
+## 10. Encryption
+
+```dart
+final secrets = await SmartLocalStorage.box('secrets', encrypted: true);
+final big = await SmartLocalStorage.lazyBox('chats', encrypted: true);
+```
+
+AES-256-GCM, done by the OS: the key is created and kept in the Android
+Keystore / iOS Keychain and never reaches Dart. Data is unreadable on a
+copied or rooted device's file system.
+
+Things to know:
+- Android 6.0 (API 23)+ and iOS 13+. On older Android, `encrypted: true` throws.
+- The key is lost when the app is uninstalled. On Android, Auto Backup can restore
+  the files without the key, so exclude them: set `android:allowBackup="false"`
+  or add a backup rule excluding `files/smart_local_storage/`.
+- Existing plain data is encrypted on the next save. Turning `encrypted` off
+  later still reads old encrypted files.
+- Encrypted lazy boxes call the OS once per record, so they are slower than
+  plain ones. Encrypt only what is sensitive.
+
 ## Honest limits
 
-Great for settings, game data, caches and lists up to tens of thousands of
-small records. The whole box is kept in memory and saved as one file, so for
-hundreds of thousands of records, indexes or relations use SQLite / Drift / Isar.
+- A normal box is fully in memory: great up to tens of thousands of small records.
+- A lazy box handles hundreds of thousands, but has no joins, no multi-field
+  indexes and no transactions across boxes.
+- Need complex SQL, relations or multi-process access? Use SQLite / Drift / Isar.
+
+## Development
+
+```bash
+flutter pub get
+flutter analyze
+flutter test
+```
+
+GitHub Actions runs the same checks on stable and beta Flutter every week, so
+new Flutter releases are tested automatically.
 
 ## Example app
 
-`example/` has 3 screens: plain Maps with live search, a typed model, and a
-20,000-record stress test with queries, flush and migration.
+`example/` has 4 screens: plain Maps with live search, a typed model, a
+20,000-record stress test with queries / flush / migration, and a big-data screen
+with lazy boxes, indexes and encryption.
