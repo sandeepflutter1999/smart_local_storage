@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_local_storage/smart_local_storage.dart';
+import 'package:smart_local_cache/smart_local_cache.dart';
 
 import 'note.dart';
 
