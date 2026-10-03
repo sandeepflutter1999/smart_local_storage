@@ -1,13 +1,16 @@
+## 2.2.3
+
+### Fixed
+- iOS: `No podspec found for smart_local_cache` on `pod install`. The podspec and Swift Package folder are now named after the package (`ios/smart_local_cache.podspec`, `ios/smart_local_cache/`).
+- Android: added the missing `android/build.gradle`, `settings.gradle` and `AndroidManifest.xml` (the plugin could not build).
+- Removed the duplicate `ios/Classes` copy of the Swift plugin.
+
 ## 2.2.2
 
 ### Fixed
 - `pubspec.yaml` description shortened (pub.dev limit is 180 characters).
 - Static analysis: removed an unnecessary import and fixed doc comments that looked like HTML.
 ## 2.2.1
-
-### Fixed
-- `pubspec.yaml` description shortened (pub.dev limit is 180 characters).
-- Static analysis: removed an unnecessary import and fixed doc comments that looked like HTML.
 
 ### Added
 - macOS, Linux and Windows support for plain storage (no native code needed; the folder is found in Dart). Encryption stays Android / iOS only and throws `UnsupportedError` elsewhere.
