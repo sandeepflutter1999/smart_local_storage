@@ -585,7 +585,7 @@ class SmartLazyBox {
   Future<void> _compact() async {
     final tmp = File('${_file.path}.compact');
     final sink = tmp.openWrite();
-    final newIndex = LinkedHashMap<String, _Loc>();
+    final newIndex = <String, _Loc>{};
     var offset = 0;
 
     void write(List<int> bytes) {
