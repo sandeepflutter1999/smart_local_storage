@@ -1,3 +1,8 @@
+## 2.2.2
+
+### Fixed
+- `pubspec.yaml` description shortened (pub.dev limit is 180 characters).
+- Static analysis: removed an unnecessary import and fixed doc comments that looked like HTML.
 ## 2.2.1
 
 ### Fixed
